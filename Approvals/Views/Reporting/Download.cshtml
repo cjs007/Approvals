@@ -1,0 +1,35 @@
+﻿@model Approvals.ViewModels.ReportingViewModel
+@{
+    ViewBag.Title = "Download";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Download</h2>
+
+@using (Html.BeginForm("ExportToExcel", "Reporting"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaymentRequest.ClientId)
+        @Html.DropDownListFor(m => m.PaymentRequest.ClientId, new SelectList(Model.User.Clients, "Id", "ClientNumber"), "All Clients", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaymentRequest.Status)
+        @Html.DropDownListFor(m => m.PaymentRequest.Status, new List<SelectListItem>
+
+                 {
+                    new SelectListItem{ Text="Submitted", Value = "Submitted" },
+                    new SelectListItem{ Text="Paid", Value = "Paid" },
+                    new SelectListItem{ Text="Approved", Value = "Approved" }
+                 }, "All Status", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Report</button>
+
+}
+
+
+<br /><br />
+
+
+
+@Html.ActionLink("Export", "ExportToExcel", "Reporting", null, new { @class = "btn btn-primary" })

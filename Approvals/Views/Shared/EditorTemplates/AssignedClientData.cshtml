@@ -1,0 +1,8 @@
+﻿@model Approvals.ViewModels.UserEditViewModel.AssignedClientData
+@using Approvals.ViewModels;
+
+<fieldset>
+    @Html.HiddenFor(m => m.ClientId)
+    @Html.CheckBoxFor(m => m.Assigned)
+    @Html.DisplayFor(m => m.ClientAcronym)
+</fieldset>

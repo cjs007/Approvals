@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Approvals.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@if (!Model.Any())
+{
+    <p>We don't have any users yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+
+        <thead>
+            <tr>
+                <th>User First</th>
+                <th>User Last</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Clients</th>
+                <th>Client Assignment</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var user in Model)
+            {
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Email</td>
+                <td>
+                    @if (user.IsAdmin)
+                    {
+                        @:Admin <br />
+                    }
+                    @if (user.IsApprover)
+                    {
+                        @:Approver <br />
+                    }
+                    @if (user.IsOwner)
+                    {
+                        @:Owner <br />
+                    }
+                </td>
+                <td>
+                    @foreach (var client in user.Clients)
+                    {
+                        @client.ClientAcronym <br />
+                    }
+                </td>
+                <td> @Html.ActionLink("Assign", "AddClient", "Users", new { id = @user.Id }, new { @class = "btn btn-primary" })</td>
+                <td> @Html.ActionLink("Edit", "Edit", "Users", new { id = @user.Id }, new { @class = "btn btn-primary" })</td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+}

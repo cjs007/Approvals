@@ -1,0 +1,94 @@
+﻿@model Approvals.ViewModels.PaymentRequestIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@if (Model.User.IsAdmin)
+{
+    <p>
+        @Html.ActionLink("New Payment Request", "New", "PaymentRequests", null, new { @class = "btn btn-primary" })
+    </p>
+}
+
+@if (!Model.PaymentRequests.Any())
+{
+    <p>No Payment Requests Returned.</p>
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        <p>
+            Payee Search: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
+    <br />
+
+    <div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink("Request Client", "Index", new { sortOrder = ViewBag.ClientSortParm })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Submit Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Request Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Request Amount", "Index", new { sortOrder = ViewBag.AmountSortParm })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Request Status", "Index", new { sortOrder = ViewBag.StatusSortParm })
+                    </th>
+                    <th>Review/Approve</th>
+                    @if (Model.User.IsOwner)
+                    {
+                        <th>Delete</th>
+                    }
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var paymentRequest in Model.PaymentRequests)
+                {
+                    if (Model.User.Clients.Contains(paymentRequest.Client))
+                    {
+                        <tr>
+                            <td>@paymentRequest.Client.ClientAcronym</td>
+                            <td>@paymentRequest.SubmitDateTime</td>
+                            <td>@paymentRequest.Name</td>
+                            <td>@paymentRequest.Amount</td>
+                            <td>@paymentRequest.Status</td>
+                            <td>@Html.ActionLink("Review", "Review", "PaymentRequests", new { id = paymentRequest.Id }, null)</td>
+                            @if (Model.User.IsOwner)
+                            {
+                                <td>
+                                    @Html.ActionLink("Delete", "Delete", "PaymentRequests", new { id = paymentRequest.Id }, null)
+                                </td>
+                            }
+
+                        </tr>
+                    }
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+
+@if (@Model.User.IsOwner)
+{
+    <p>
+        @Html.ActionLink("Export", "ExportToExcel", "PaymentRequests", null, new { @class = "btn btn-primary" })
+    </p>
+}

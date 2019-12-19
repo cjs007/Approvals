@@ -1,0 +1,70 @@
+﻿@model Approvals.ViewModels.NewPaymentRequestViewModel
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New</h2>
+
+@using (Html.BeginForm("Submit",
+                        "PaymentRequests",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+{
+<div class="form-group">
+    @Html.LabelFor(m => m.PaymentRequest.ClientId)
+    @Html.DropDownListFor(m => m.PaymentRequest.ClientId, new SelectList(Model.User.Clients, "Id", "ClientNumber"), "Select Client", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.PaymentRequest.ClientId, "", new { @style = "color:red" })
+</div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaymentRequest.Name)
+        @Html.TextBoxFor(m => m.PaymentRequest.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PaymentRequest.Name,"", new { @style = "color:red" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaymentRequest.AddressOne)
+        @Html.TextBoxFor(m => m.PaymentRequest.AddressOne, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PaymentRequest.AddressOne, "", new { @style = "color:red" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaymentRequest.AddressTwo)
+        @Html.TextBoxFor(m => m.PaymentRequest.AddressTwo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PaymentRequest.AddressTwo, "", new { @style = "color:red" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaymentRequest.AddressThree)
+        @Html.TextBoxFor(m => m.PaymentRequest.AddressThree, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaymentRequest.Amount)
+        @Html.TextBoxFor(m => m.PaymentRequest.Amount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PaymentRequest.Amount, "", new { @style = "color:red" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaymentRequest.GLLine)
+        @Html.TextBoxFor(m => m.PaymentRequest.GLLine, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PaymentRequest.GLLine, "", new { @style = "color:red" })
+    </div>
+
+    <label for="file">Upload Backup:</label>
+    <input type="file" name="file" id="file" /><br><br>
+
+    <input type="submit" value="Submit Payment Request" />
+    <br><br>
+    @ViewBag.Message
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

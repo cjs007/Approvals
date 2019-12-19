@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Approvals.Models.Client>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("New Client", "New", "Clients", null, new { @class = "btn btn-primary" })
+</p>
+
+@if (!Model.Any())
+{
+    <p>We don't have any Clients yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+
+        <thead>
+            <tr>
+                <th>Client Id</th>
+                <th>Client Number</th>
+                <th>Client Acronym</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var client in Model)
+            {
+                <tr>
+                    <td>@client.Id</td>
+                    <td>@client.ClientNumber</td>
+                    <td>@client.ClientAcronym</td>
+                    <td>@Html.ActionLink("Delete", "Delete", "Clients", new { id = client.Id }, null)</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+}

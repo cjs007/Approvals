@@ -1,0 +1,98 @@
+﻿@model Approvals.ViewModels.PaymentRequestReviewViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.PaymentRequest.Name</h2>
+
+<table class="table table-bordered table-hover">
+
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Detail</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>Name</td>
+            <td>@Model.PaymentRequest.Name
+            <td>
+        </tr>
+        <tr>
+            <td>Client</td>
+            <td>@Model.PaymentRequest.Client.ClientAcronym @Model.PaymentRequest.Client.ClientNumber<br /></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>@Model.PaymentRequest.AddressOne<br />@Model.PaymentRequest.AddressTwo<br />@Model.PaymentRequest.AddressThree</td>
+        </tr>
+        <tr>
+            <td>Amount</td>
+            <td>@Model.PaymentRequest.Amount<br /></td>
+        </tr>
+        <tr>
+            <td>GL Line</td>
+            <td>@Model.PaymentRequest.GLLine<br /></td>
+        </tr>
+        <tr>
+            <td>File</td>
+            <td>@Html.ActionLink("Download", "Download", "PaymentRequests", new { id = @Model.PaymentRequest.Id }, null)</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>@Model.PaymentRequest.Status<br /></td>
+        </tr>
+        <tr>
+            <td>Submit Time</td>
+            <td>@Model.PaymentRequest.SubmitDateTime<br /></td>
+        </tr>
+        <tr>
+            <td>Submitted By</td>
+            <td>@Model.PaymentRequest.Submitter<br /></td>
+        </tr>
+        <tr>
+            <td>Approval Time</td>
+            <td>@Model.PaymentRequest.ApproveDateTime<br /></td>
+        </tr>
+        <tr>
+            <td>Approved By</td>
+            <td>@Model.PaymentRequest.Approver<br /></td>
+        </tr>
+        <tr>
+            <td>Check Number</td>
+            <td>@Model.PaymentRequest.CheckNumber<br /></td>
+        </tr>
+        <tr>
+            <td>Check Date</td>
+            <td>@Model.PaymentRequest.PaidDate<br /></td>
+        </tr>
+        <tr>
+            <td>Check Logged By</td>
+            <td>@Model.PaymentRequest.Payor<br /></td>
+        </tr>
+
+
+
+    </tbody>
+</table>
+
+<br />
+@if (Model.User.IsApprover || Model.User.IsOwner)
+{
+    if (!Model.PaymentRequest.Approved)
+    {
+        @Html.ActionLink("Approve", "Approve", "PaymentRequests", new { id = @Model.PaymentRequest.Id }, new { @class = "btn btn-primary" })
+    }
+}
+@if (Model.User.IsAdmin || Model.User.IsOwner)
+{
+    if (!Model.PaymentRequest.Paid)
+    {
+        @Html.ActionLink("Pay", "Pay", "PaymentRequests", new { id = @Model.PaymentRequest.Id }, new { @class = "btn btn-primary" })
+    }
+}
+

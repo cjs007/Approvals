@@ -1,0 +1,42 @@
+﻿@model Approvals.ViewModels.UserEditViewModel
+@{
+    ViewBag.Title = "RoleEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.User.FirstName @Model.User.LastName</h2>
+
+@using (Html.BeginForm("Save", "Users"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.User.FirstName)
+        @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.User.LastName)
+        @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control" })
+    </div>
+
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.User.IsAdmin) Admin
+        </label>
+    </div>
+
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.User.IsApprover) Approver
+        </label>
+    </div>
+
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.User.IsOwner) Owner
+        </label>
+    </div>
+
+    @Html.HiddenFor(m => m.User.Id)
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}

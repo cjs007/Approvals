@@ -1,0 +1,24 @@
+﻿@model Approvals.ViewModels.NewClientViewModel
+
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Invoice</h2>
+
+@using (Html.BeginForm("Save", "Clients"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Client.ClientNumber)
+        @Html.TextBoxFor(m => m.Client.ClientNumber, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Client.ClientAcronym)
+        @Html.TextBoxFor(m => m.Client.ClientAcronym, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+
+}
